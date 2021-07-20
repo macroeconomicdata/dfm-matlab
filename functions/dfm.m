@@ -90,9 +90,9 @@ end
 
 %% Prepare data -----------------------------------------------------------
 Mx = mean(X,'omitnan');
-Wx = std(X,'omitnan');
+Wx = std(X,'omitnan')/10;
 % data including NaN values (i.e. not imputed)
-xNaN = 10*(X-repmat(Mx,T,1))./repmat(Wx,T,1);  % Standardize series, ie scale()
+xNaN = (X-repmat(Mx,T,1))./repmat(Wx,T,1);  % Standardize series, ie scale()
 
 % get the number of high frequnecy periods in every low frequency period
 frq = set_frequencies(frq); 
@@ -219,7 +219,7 @@ end
 % Final Run of filter/smoother using our estimated parameters
 T = size(X_pred, 1);
 HJ = get_HJ(H,frq,isdiff,p);
-xpNaN = 10*(X_pred-repmat(Mx,T,1))./repmat(Wx,T,1);
+xpNaN = (X_pred-repmat(Mx,T,1))./repmat(Wx,T,1);
 if ar_errors
     HH = [HJ, eye(k)];
     [Zsmooth, Vsmooth, ~, LogLik, Update] = runKF(xpNaN', A, HH, Q, R);
@@ -239,8 +239,8 @@ if ar_errors
     % due to factors)
     y_ar = Zsmooth(:, sa+1:sA); % ar errors
     y_smooth = y_common + y_ar;  % Get smoothed Y
-    Res.Y_common = repmat(Wx,T,1).*y_common/10 + repmat(Mx,T,1); 
-    Res.Y_ar = repmat(Wx,T,1).*y_ar/10 + repmat(Mx,T,1);
+    Res.Y_common = repmat(Wx,T,1).*y_common + repmat(Mx,T,1); 
+    Res.Y_ar = repmat(Wx,T,1).*y_ar + repmat(Mx,T,1);
 else
     for t=1:T
         var_Y(t,:) = diag(HJ*Vsmooth(:,:,t)*HJ')' + R; % variance of predicted observations
@@ -253,9 +253,9 @@ y_lower = y_smooth - sqrt(var_Y);
 
 %%  Loading the structure with the results --------------------------------
 Res.y_smooth = y_smooth; %smoothed (fitted) values of inputs data
-Res.Y_smooth = repmat(Wx,T,1).*y_smooth/10 + repmat(Mx,T,1);  % Unstandardized, smoothed values
-Res.Y_upper = repmat(Wx,T,1).*y_upper/10 + repmat(Mx,T,1); % unstandardized upper bound
-Res.Y_lower = repmat(Wx,T,1).*y_lower/10 + repmat(Mx,T,1); % unstandardized lower bound
+Res.Y_smooth = repmat(Wx,T,1).*y_smooth + repmat(Mx,T,1);  % Unstandardized, smoothed values
+Res.Y_upper = repmat(Wx,T,1).*y_upper + repmat(Mx,T,1); % unstandardized upper bound
+Res.Y_lower = repmat(Wx,T,1).*y_lower + repmat(Mx,T,1); % unstandardized lower bound
 Res.Z = Zsmooth; % factors
 Res.H = H; % loadings
 Res.HJ = HJ; % loadings in Kalman Filter format
