@@ -1,15 +1,19 @@
+function [Y, X] = sim_dfm_mixed_frq(T)
 % Simulate data in DFM form
-
+%% Input:
+% T - periods to simulate
+%% Output:
+% Y - Simulated data
+% X - Simulated Factors
+%% Description
 % Observation equation
 % Y_t = H*F_t + e_t
-
 % Transition equation
 % F_t = A F_{t-1} + u_t
-
-function [Y, X] = sim_dfm_mixed_frq(T)
+%% Function
 B = [.4, -.2 , .2, .2, .1, 0; .3, .3 .1 .2, .1, .1];
 A = comp_form(B);
-% eig(A);
+% eig(A); % Check stationarity 
 Z = zeros(T, 6); % 2 factors x 3 lags
 q = [1, .5; .5, .8];
 E = randn(T,2)*q;

@@ -1,31 +1,44 @@
 function Res = dfm(X,X_pred,m,p,frq,isdiff,varargin) % blocks, threshold, ar_errors
-%DFM()    Runs the dynamic factor model
+%dfm()    Runs the dynamic factor model
 %
-%  Input arguments:
-%    X: Transformed input data (i.e. log differenced where needed).
+%%  Input arguments:
+%    X: Transformed input data (i.e. log differenced where needed) with 
+%       outliers dropped for estimation.
+%    X_pred: Transformed input data (i.e. log differenced where needed)  
+%       including outliers for prediction.
 %    m: number of factors
 %    p: number of lags
+%    frq: frequency of data, one of 'd', 'w', 'b', 'm', 'q', 'y'. ('b' is 
+%       every other week
 %    isdiff: logical (T/F) indicating if series in corresponding column is
-%    differenced (for mixed frequency aggregation)
-%
-% Output Arguments:
+%       differenced (for mixed frequency aggregation)
+% Optional inputs:
+%    blocks: zeros restrictions on loadings where 0's indicate a
+%       restriction
+%    ar_errors: logical: include ar(1) erros of the data?
+%    threshold: threshold for likelihood function convergence
+%    varnames: variable names for printing results
+
+%% Output Arguments:
 %
 %   Res - structure of model results with the following fields
-%       .X_sm  Kalman-smoothed data where missing values are replaced by their expectation
-%       .Z  Smoothed states. 
-%       .H  Observation matrix. For low frequency data, C gives loadings for aggregated factors
-%       .HJ Observation matrix times appropriate helper matrix J for each
-%       series. This is what is actually used to get fitted values of
-%       observables. 
-%       .R: Covariance for observation matrix residuals
-%       .A: Transition matrix
-%       .Q: Covariance for transition equation residuals.
-%       .Mx: Series mean
-%       .Wx: Series standard deviation
-%       .Z_0: Initial value of state
-%       .V_0: Initial value of covariance matrix
-%       .r: Number of common factors for each block
-%       .p: Number of lags in transition equation
+%        .y_smooth - Standardized smoothed (fitted) values of inputs data
+%        .Y_smooth - Unstandardized, smoothed values
+%        .Y_upper - Unstandardized upper bound
+%        .Y_lower - Unstandardized lower bound
+%        .Z - factors
+%        .H - loadings
+%        .HJ - loadings in mixed frequency Kalman Filter format
+%        .R - Shocks in observation equatoin
+%        .A - Transition matrix in companion form
+%        .Q - Shocks in transition equation
+%        .Mx - Mean of data
+%        .Wx - scale parameter for data
+%        .m - number of factors
+%        .p - number of paremters
+%        .forecast_loglikelihood - Log Likelihood for data used for prediction
+%        .fitted_loglikelihood - % Log likelihood of data used for fitting the model
+%        .Update - How much does each series contribute at each period
 %
 % References:
 %
