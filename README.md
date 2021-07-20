@@ -6,7 +6,7 @@ Matlab functions to estimate and work with dynamic factor models (DFMs) develope
 
 This code is losely based on the open source code from "[Macroeconomic Nowcasting and Forecasting with Big Data](https://www.newyorkfed.org/research/staff_reports/sr830.html)" by Brandyn Bok, Daniele Caratelli, Domenico Giannone, Argia M. Sbordone, and Andrea Tambalotti, *Staff Reports 830*, Federal Reserve Bank of New York (prepared for Volume 10 of the *Annual Review of Economics*).
 
-**Note:** This simplified code is written so that it should be easy to follow and implement for any standard mixed frequency data set. **These modifications were implemented by Seth Leonard/OttoQuant and are not associated with the Federal Reserve Bank of New York or any of its staff.**
+**Note:** This simplified code is written so that it should be easy to follow and implement for any standard mixed frequency data set. **These modifications were implemented by Seth Leonard in collaboration with the BCC and are not associated with the Federal Reserve Bank of New York or any of its staff.**
 
 ## Using this code
  
