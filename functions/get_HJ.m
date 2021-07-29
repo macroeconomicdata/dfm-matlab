@@ -1,8 +1,12 @@
-%--------------------------------------------------------------------------
-
-% Helper matrix J for observation equation
-
 function HJ = get_HJ(H,frq,is_diff,p)
+%% Description
+% Get loadings integrating helper matrix J for mixed frequency data
+%% Input
+% H: contemporaneous loadings
+% frq: frequency of series (keyed to index)
+% is_diff: logical, is the series differenced (keyed to index)
+% p: number of laggs in transition equation
+
 [k,m] = size(H);
 lags = frq;
 lags(is_diff,:) = arrayfun(@(x)(2*x-1),frq(is_diff,:));

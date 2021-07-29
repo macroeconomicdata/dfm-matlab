@@ -1,4 +1,4 @@
-%--------------------------------------------------------------------------
+function [A, H, Q, R] = InitCond(X,m,p,frq,isdiff, blocks)
 
 %InitCond()      Calculates initial conditions for parameter estimation
 %
@@ -9,21 +9,19 @@
 %    techniques.
 %
 %Inputs:
-%  - x:      Standardized data
-%  - r:      Number of common factors for each block
-%  - p:      Number of lags in transition equation
-%  - frq: frequency mix
-%
+% X: Standardized data
+% m: Number of common factors
+% p: Number of lags in transition equation
+% frq: frequency mix
+% isdiff: logical, is the series differenced
+% blocks: zero restrictions on loadings
 %Output:
 %  - A:   Transition matrix
-%  - C:   Observation matrix
+%  - H:   Observation matrix
 %  - Q:   Covariance for transition equation residuals
 %  - R:   Covariance for observation equation residuals
 
 % This is just estimation by principal components or "two-step" estimation
-
-
-function [ A, H, Q, R] = InitCond(X,m,p,frq,isdiff, blocks)
 
 [T,k] = size(X);
 xBal = zeros(T,k);

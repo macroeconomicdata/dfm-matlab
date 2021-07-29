@@ -1,20 +1,21 @@
 %______________________________________________________________________
 function S = Kfilter(Y, A, HJ, Q, R)
-%  Applies Kalman filter
+%  Applies the Kalman filter (see Dornbush Koopman (2012))
 %
 %  Syntax:
-%    S = SKF(Y, A, C, Q, R)
+%    S = KF(Y, A, HJ, Q, R)
 %
 %  Description:
-%    Kfilter() applies the Kalman filter for the approximate model, meaning
+%    KF() applies the Kalman filter for the approximate model, meaning
 %    that R is a vector, not a matrix.
 
 %  Input parameters:
 %    Y: k-by-nobs matrix of input data
-%    A: m-by-m transition matrix 
-%    C: k-by-m observation matrix
-%    Q: m-by-m covariance matrix for transition equation residuals (mu_t)
-%    R: k-by-k matrix of variances for shocks to observations(e_t)
+%    A: r-by-r transition matrix where r is the total number of factors
+%    (including lags)
+%    HJ: k-by-r observation matrix
+%    Q: r-by-r covariance matrix for transition equation residuals (mu_t)
+%    R: k-by-1 vector of variances for shocks to observations(e_t)
 %
 %  Output parameters:
 %    S.Zm: m-by-nobs matrix, prior/predicted factor state vector
@@ -26,7 +27,7 @@ function S = Kfilter(Y, A, HJ, Q, R)
 %    S.VmU: m-by-m-by-(nobs+1) array, posterior/updated covariance of
 %           factor state vector (S.VmU(:,:,t+1) = V_t|t)
 %    S.loglik: scalar, value of likelihood function
-%    S.k_t: k-by-m Kalman gain
+%    S.k_t: m-by-m output for smoothing initial (nobs) obs
   
 %% INITIALIZE OUTPUT VALUES ---------------------------------------------
   % Output structure & dimensions of state space matrix

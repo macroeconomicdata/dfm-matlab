@@ -3,17 +3,18 @@ function S = KF(Y, A, HJ, Q, R)
 %  Applies fast Kalman filter (see Dornbush Koopman (2012))
 %
 %  Syntax:
-%    S = SKF(Y, A, C, Q, R)
+%    S = KF(Y, A, HJ, Q, R)
 %
 %  Description:
-%    Kfilter() applies the Kalman filter for the approximate model, meaning
+%    KF() applies the Kalman filter for the approximate model, meaning
 %    that R is a vector, not a matrix.
 
 %  Input parameters:
 %    Y: k-by-nobs matrix of input data
-%    A: m-by-m transition matrix 
-%    C: k-by-m observation matrix
-%    Q: m-by-m covariance matrix for transition equation residuals (mu_t)
+%    A: r-by-r transition matrix where r is the total number of factors
+%    (including lags)
+%    HJ: k-by-r observation matrix
+%    Q: r-by-r covariance matrix for transition equation residuals (mu_t)
 %    R: k-by-1 vector of variances for shocks to observations(e_t)
 %
 %  Output parameters:

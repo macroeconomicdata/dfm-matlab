@@ -1,7 +1,22 @@
-%--------------------------------------------------------------------------
-
-
 function [A_out, H, Q_out, R] = InitAR(Y, A, H, Q, R, frq, isdiff)
+
+%InitCondAR()   Calculates initial estimates for autoregressive error
+%               terms and shocks to the observation and transition equation
+%
+%Inputs:
+%  Y: Standardized data
+%  A: Transition matrix from model without AR errors
+%  H: Loadings for model without AR errors
+%  Q: Shocks to the transition equation for model without AR errors
+%  R: Shocks to the observation equation for model without AR errors
+%  frq: frequency mix
+%  isdiff: logical, is the data differenced
+
+%Output:
+%  - A_out:   Transition matrix with AR parameters
+%  - H:   Observation matrix (unchanged from input)
+%  - Q:   Covariance for transition equation residuals
+%  - R:   Covariance for observation equation residuals
 
 [k,T] = size(Y);
 sA = size(A,1);

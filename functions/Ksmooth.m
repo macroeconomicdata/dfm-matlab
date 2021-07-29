@@ -1,21 +1,20 @@
 %______________________________________________________________________
 function S = Ksmooth(A, S)
-%FIS() --- now Ksmooth() ---   Applies fixed-interval smoother
+%  Applies fixed-interval smoother
 %
 %  Syntax:
-%    S = FIS(A, S)
+%    S = Ksmooth(A, S)
 %
 %  Description:
-%    SKF() applies a fixed-interval smoother, and is used in conjunction 
-%    with SKF(). See  page 154 of 'Forecasting, structural time series models 
-%    and the Kalman filter' for more details (Harvey, 1990).
+%    Ksmooth() applies the Kalman smoother.
 %
 %  Input parameters:
-%    A: m-by-m transition matrix 
-%    S: structure returned by SKF()
+%    A: r-by-r transition matrix where r is the total number of factors
+%    including lags
+%    S: structure returned by Ksmooth()
 %
 %  Output parameters:
-%    S: FIS() adds the following smoothed estimates to the S structure: 
+%    S: 
 %    - S.ZmT: m-by-(nobs+1) matrix, smoothed states
 %             (S.ZmT(:,t+1) = Z_t|T) 
 %    - S.VmT: m-by-m-by-(nobs+1) array, smoothed factor covariance
@@ -24,7 +23,7 @@ function S = Ksmooth(A, S)
 %               matrices (S.VmT_1(:,:,t) = Cov(Z_t Z_t-1|T))
 %
 %  Model:
-%   Y_t = C_t Z_t + e_t for e_t ~ N(0, R)
+%   Y_t = HJ_t Z_t + e_t for e_t ~ N(0, R)
 %   Z_t = A Z_{t-1} + mu_t for mu_t ~ N(0, Q)
 
 %% ORGANIZE INPUT ---------------------------------------------------------

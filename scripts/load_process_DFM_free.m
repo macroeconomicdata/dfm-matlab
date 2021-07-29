@@ -9,7 +9,7 @@ addpath 'mutils/functions'
 addpath 'dfm-matlab/functions'
 addpath(genpath('mutils/toolbox')) % this is where the X-13 toolbox is located
 % Location of macroeconomicdata.com macro dropbox folder
-macro_folder = 'C:\Users\seton\Dropbox\macroeconomicdata\sample_data';
+macro_folder = 'C:\Users\seton\Dropbox\sample_data'; % Get the data
 addpath(macro_folder)
 
 %% Load free data
